@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link href="//db.onlinewebfonts.com/c/2206d6cc490084998d531e8c1b2cbb4a?family=Druk+Wide+Bold" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="icon" type="image/png" href="fav.png">
+    <title>Snake: the game</title>
+  </head>
+  <body>
+
+    <div class="container h-100">
+       
+        <div class="row justify-content-center h-100 align-items-center">
+            <div class="col-12 col-xs-12 col-md-12 align-self-center text-center">
+                <div class="title mt-5 mb-3">
+                    <h1>30daysofcode</h1>
+                    <h3>Day 2 : Snake game</h3>
+                    <h5>Press &#8592; &#8593; &#8594; &#8595;</h5>
+                </div>
+                <canvas id="gc" width="400" height="400">
+                </canvas>
+                
+            </div>
+          
+        </div>
+
+    </div>
+
+
+          
+  
+    
+    <script>
+        window.onload=function() {
+            canv=document.getElementById("gc");
+            ctx=canv.getContext("2d");
+            document.addEventListener("keydown",keyPush);
+            setInterval(game,1000/15);
+ }
+
+ px=py=10;
+ gs=tc=20;
+ ax=ay=15;
+ xv=yv=0;
+ trail=[];
+ tail=5;
+
+ function game() {
+     px+=xv;
+     py+=yv;
+
+     if(px<0) {
+         px=tc-1;
+     }
+     if(px>tc-1) {
+        px=0;
+    }
+    if(py<0) {
+        py=tc-1;
+    }
+    if(py>tc-1) {
+       py=0;
+   }
+
+   ctx.fillStyle="black";
+   ctx.fillRect(0,0,canv.width,canv.height);
+
+   ctx.fillStyle="white";
+   for(var i=0; i<trail.length;i++){
+        ctx.fillRect(trail[i].x*gs,trail[i].y*gs,gs-2,gs-2);
+        if(trail[i].x==px && trail[i].y==py){
+            tail=5;
+        }
+   }
+
+   trail.push({x:px,y:py});
+   while(trail.length>tail){
+       trail.shift();
+   }
+
+   if(ax==px && ay==py){
+    tail++;
+    ax=Math.floor(Math.random()*tc);
+    ay=Math.floor(Math.random()*tc);
+
+}
+   
+
+   ctx.fillStyle="limegreen";
+   ctx.fillRect(ax*gs,ay*gs,gs-2,gs-2);
+
+ }
+ function keyPush(evt) {
+     switch(evt.keyCode){
+        case 37:
+            xv=-1;yv=0;
+            break;
+        case 38:
+            xv=0;yv=-1;
+            break;
+        case 39:
+            xv=1;yv=0;
+            break;
+        case 40:
+            xv=0;yv=1;
+            break;
+
+     }
+
+ }
+    </script>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  </body>
+</html>
